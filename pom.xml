@@ -12,9 +12,9 @@
 	</parent>
 
 	<groupId>web</groupId>
-	<artifactId>sistemagerenciamentodehotel</artifactId>
+	<artifactId>sistemagerenciamentohotel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sistemagerenciamentodehotel</name>
+	<name>controlevacinacao</name>
 
 	<properties>
 		<!-- Versao do Java -->

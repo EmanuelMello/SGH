@@ -15,26 +15,27 @@
 			<div class="container-fluid">
 
 				<form th:action="@{/hospedes/cadastrar}" method="post" th:object="${hospede}">
+					<div th:fragment="campospesquisahospede">
+						<label for="nome" class="form-label">Nome</label>
+						<input type="text" th:field="*{nome}" class="form-control mb-3" th:errorclass="is-invalid">
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:each="erro : ${#fields.errors('nome')}" th:text="${erro} + '. '"></span>
 
-					<label for="nome" class="form-label">Nome</label>
-					<input type="text" th:field="*{nome}" class="form-control mb-3" th:errorclass="is-invalid">
-					<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:each="erro : ${#fields.errors('nome')}" th:text="${erro} + '. '"></span>
+						<label for="cpf" class="form-label">CPF</label>
+						<input type="text" th:field="*{cpf}" class="form-control mb-3" th:errorclass="is-invalid">
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:each="erro : ${#fields.errors('cpf')}" th:text="${erro} + '. '"></span>
 
-					<label for="cpf" class="form-label">CPF</label>
-					<input type="text" th:field="*{cpf}" class="form-control mb-3" th:errorclass="is-invalid">
-					<span class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:each="erro : ${#fields.errors('cpf')}" th:text="${erro} + '. '"></span>
+						<label for="rg" class="form-label">RG</label>
+						<input type="text" th:field="*{rg}" class="form-control mb-3" th:errorclass="is-invalid">
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('rg')}" th:each="erro : ${#fields.errors('rg')}" th:text="${erro} + '. '"></span>
 
-					<label for="rg" class="form-label">RG</label>
-					<input type="text" th:field="*{rg}" class="form-control mb-3" th:errorclass="is-invalid">
-					<span class="invalid-feedback" th:if="${#fields.hasErrors('rg')}" th:each="erro : ${#fields.errors('rg')}" th:text="${erro} + '. '"></span>
+						<label for="telefone" class="form-label">Telefone</label>
+						<input type="text" th:field="*{telefone}" class="form-control mb-3" th:errorclass="is-invalid">
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('telefone')}" th:each="erro : ${#fields.errors('telefone')}" th:text="${erro} + '. '"></span>
 
-					<label for="telefone" class="form-label">Telefone</label>
-					<input type="text" th:field="*{telefone}" class="form-control mb-3" th:errorclass="is-invalid">
-					<span class="invalid-feedback" th:if="${#fields.hasErrors('telefone')}" th:each="erro : ${#fields.errors('telefone')}" th:text="${erro} + '. '"></span>
-
-					<input type="submit" value="Cadastrar" class="btn btn-primary">
+						<input type="submit" value="Cadastrar" class="btn btn-primary">
+					</div>
 				</form>
-				
+
 				<div th:if="${notificacao != null}" th:object="${notificacao}">
 					<input type="hidden" id="mensagem" th:value="*{mensagem}">
 					<input type="hidden" id="tipo" th:value="*{tipo}">

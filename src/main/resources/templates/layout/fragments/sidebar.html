@@ -47,7 +47,7 @@
 							</ul>
 						</div>
 					</li>
-					
+
 					<!-- 2o elemento -->
 					<li>
 						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#quartos">
@@ -61,8 +61,8 @@
 									<i class="bi bi-chevron-down"></i>
 								</span>
 							</span>
-						</a>   
-						
+						</a>
+
 						<div class="collapse" id="quartos" th:classappend=" ${#strings.startsWith(#request.requestURI, '/quartos')} ? show">
 							<ul class="navbar-nav ps-3">
 								<li>
@@ -84,9 +84,9 @@
 							</ul>
 						</div>
 					</li>
-					
+
 					<!-- 3o elemento -->
-					
+
 					<li>
 						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#hospedes">
 							<span class="me-2">
@@ -122,7 +122,7 @@
 							</ul>
 						</div>
 					</li>
-					
+
 					<!-- 4o elemento -->
 					<li>
 						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#contas">
@@ -163,7 +163,7 @@
 							<span class="me-2">
 								<i class="bi bi-briefcase-fill"></i>
 							</span>
-							<span>CheckIn</span>
+							<span>Hospedagem</span>
 							<span class="ms-auto">
 								<span class="right-icon">
 									<i class="bi bi-chevron-down"></i>
@@ -177,7 +177,15 @@
 										<span class="me-2">
 											<i class="bi bi-plus-square text-white"></i>
 										</span>
-										<span class="text-white">Cadastrar Hóspede</span>
+										<span class="text-white">Fazer CheckIn</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/checkins/abrircadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Fazer CheckOut</span>
 									</a>
 								</li>
 								<li>
@@ -185,7 +193,7 @@
 										<span class="me-2">
 											<i class="bi bi-search text-white"></i>
 										</span>
-										<span class="text-white">Pesquisar CheckIns</span>
+										<span class="text-white">Pesquisar CheckIn</span>
 									</a>
 								</li>
 							</ul>
@@ -203,8 +211,8 @@
 									<i class="bi bi-chevron-down"></i>
 								</span>
 							</span>
-						</a>   
-						
+						</a>
+
 						<div class="collapse" id="usuarios" th:classappend=" ${#strings.startsWith(#request.requestURI, '/usuarios')} ? show">
 							<ul class="navbar-nav ps-3">
 								<li>

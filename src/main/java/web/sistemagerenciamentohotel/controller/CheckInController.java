@@ -63,14 +63,15 @@ public class CheckInController {
 		sessao.setAttribute("checkin", checkin);
 		return "checkin/cadastrar";
 	}
-	@PostMapping("/escolherdataCheckOut")
-	public String dataCheckOut(HttpSession sessao) {
+	@GetMapping("/escolherdataCheckOut")
+	public String dataCheckOut(LocalDate dataCheckOut,HttpSession sessao) {
 		CheckIn checkin = (CheckIn) sessao.getAttribute("checkin");
 		if (checkin == null) {
 			checkin = new CheckIn();
 		}
-
-		checkin.setCheckOut(checkin.getCheckOut());
+		
+		checkin.setCheckOut(dataCheckOut);
+		
 		sessao.setAttribute("checkin", checkin);
 
 		return "checkin/cadastrar";
@@ -83,12 +84,7 @@ public class CheckInController {
 		
 		return "checkin/pesquisarhospede";
 	}
-	
-	@GetMapping("/abrircadastrarhospede")
-	public String abrirCadastrarHospede(Model model) {
-		return "checkin/cadastrarhospede";
-	}
-	
+
 	@GetMapping("/pesquisarhospede")
 	public String pesquisar(HospedeFilter filtro, Model model,
 			          @PageableDefault(size = 8) 
@@ -113,40 +109,40 @@ public class CheckInController {
 		return "checkin/cadastrar";
 	}
 	
-	@GetMapping("/abrirescolherconta")
-	public String abrirEscolherConta(Model model) {
-		List<Conta> contas = contaRepository.findByStatus(Status.ATIVO);
-		model.addAttribute("contas",contas);
-		
-		List<Consumo> consumos = consumoRepository.findByStatus(Status.ATIVO);
-		model.addAttribute("consumos",consumos);
-		
-		return "checkin/pesquisarconta";
-	}
+//	@GetMapping("/abrirescolherconta")
+//	public String abrirEscolherConta(Model model) {
+//		List<Conta> contas = contaRepository.findByStatus(Status.ATIVO);
+//		model.addAttribute("contas",contas);
+//		
+//		List<Consumo> consumos = consumoRepository.findByStatus(Status.ATIVO);
+//		model.addAttribute("consumos",consumos);
+//		
+//		return "checkin/pesquisarconta";
+//	}
 	
-	@GetMapping("/pesquisarconta")
-	public String pesquisar(ContaFilter filtro, Model model,
-			          @PageableDefault(size = 8) 
-                      @SortDefault(sort = "codigo", direction = Sort.Direction.ASC)
-                      Pageable pageable, HttpServletRequest request) {
-		Page<Conta> pagina = contaRepository.pesquisar(filtro, pageable);
-		PageWrapper<Conta> paginaWrapper = new PageWrapper<>(pagina, request);
-		model.addAttribute("pagina", paginaWrapper);
-		return "checkin/mostrarcontas";
-	}
+//	@GetMapping("/pesquisarconta")
+//	public String pesquisar(ContaFilter filtro, Model model,
+//			          @PageableDefault(size = 8) 
+//                      @SortDefault(sort = "codigo", direction = Sort.Direction.ASC)
+//                      Pageable pageable, HttpServletRequest request) {
+//		Page<Conta> pagina = contaRepository.pesquisar(filtro, pageable);
+//		PageWrapper<Conta> paginaWrapper = new PageWrapper<>(pagina, request);
+//		model.addAttribute("pagina", paginaWrapper);
+//		return "checkin/mostrarcontas";
+//	}
 	
-	@PostMapping("/escolherconta")
-	public String escolherConta(Conta conta, HttpSession sessao) {
-		CheckIn checkin = (CheckIn) sessao.getAttribute("checkin");
-		if (checkin == null) {
-			checkin = new CheckIn();
-		}
-
+//	@PostMapping("/escolherconta")
+//	public String escolherConta(Conta conta, HttpSession sessao) {
+//		CheckIn checkin = (CheckIn) sessao.getAttribute("checkin");
+//		if (checkin == null) {
+//			checkin = new CheckIn();
+//		}
+//
 //		checkin.setConta(conta);
 //		sessao.setAttribute("checkin", checkin);
-
-		return "checkin/cadastrar";
-	}
+//
+//		return "checkin/cadastrar";
+//	}
 	
 	@GetMapping("abrirescolherquarto")
 	public String abrirEscolherLote(Model model) {

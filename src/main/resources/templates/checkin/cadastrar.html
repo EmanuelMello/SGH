@@ -16,14 +16,12 @@
 				<h2 class="mb-3">Booking</h2>
 				<form th:action="@{/checkins/escolherdataCheckOut}" method="get">
 					<label for="checkOut" class="form-label">CheckOut</label>
-					<input type="text" name="checkOut" id="checkOut" th:value="${session.checkin.checkOut}" class="form-control mb-3 componentedata">
+					<input type="text" name="checkOut" id="checkOut" th:value="${{session.checkin.checkOut}}" class="form-control mb-3 componentedata">
 				</form>
-
-				</form>
-				<form th:action="@{/checkins/abrircadastrarhospede}" method="get">
-					<button type="submit" class="btn btn-primary">Cadastrar Hóspede</button>
-				</form>
-				<br>
+<!-- 				<form th:action="@{/checkins/abrircadastrarhospede}" method="get"> -->
+<!-- 					<button type="submit" class="btn btn-primary">Cadastrar Hóspede</button> -->
+<!-- 				</form> -->
+<!-- 				<br> -->
 
 				<form th:action="@{/checkins/abrirescolherhospede}" method="get">
 					<button type="submit" class="btn btn-primary">Escolher Hóspede</button>

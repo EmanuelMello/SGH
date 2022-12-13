@@ -1,8 +1,8 @@
 CREATE TABLE public.checkin
 (
     codigo serial NOT NULL,
-    dataCheckIn date,
-    dataCheckOut date,
+    checkIN date,
+    checkOut date,
     codigo_hospede integer,
     codigo_quarto integer,
     PRIMARY KEY (codigo)

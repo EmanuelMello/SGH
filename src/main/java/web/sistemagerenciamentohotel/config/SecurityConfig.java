@@ -31,7 +31,7 @@ public class SecurityConfig {
 				.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 				// Um usuário autenticado e com o papel ADMIN pode fazer requisições para essas
 				// URLs
-				.antMatchers("/consumos/cadastrar").hasRole("ADMIN")
+				.antMatchers("/quartos/cadastrar").hasRole("ADMIN")
 				.antMatchers("/usuarios/cadastrar").hasRole("ADMIN")
 				//.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 				// .antMatchers("URL").hasAnyRole("ADMIN", "USUARIO")
