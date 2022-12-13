@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Quarto</title>
+</head>
+<body>
+	<div layout:fragment="conteudo">
+
+		<div th:replace="~{layout/fragments/sidebar :: sidebar}"></div>
+
+		<!-- conteudo principal -->
+		<main class="mt-5 p-4 pt-5">
+			<div class="container-fluid">
+
+				<!-- area Grande -->
+				<div class="row">
+					<div class="col-md-12 mb-3">
+						<div class="card">
+							<div class="card-header">
+								<span>
+									<i class="bi bi-capsule me-2"></i>
+								</span>
+								<span>Quarto</span>
+							</div>
+							<div class="card-body">
+								<p th:text="'Código: ' + ${quarto.codigo}"></p>
+								<p th:number="'Valor: ' + ${quarto.valor}"></p>
+								<p th:text="'Descrição: ' + ${quarto.descricao}"></p>
+								<p th:text="'Numero: ' + ${quarto.numero}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- area grande -->
+
+			</div>
+		</main>
+	</div>
+
+</body>
+</html>

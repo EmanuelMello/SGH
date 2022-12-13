@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- offcanvas sidebar -->
+	<div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabindex="-1" id="sidebar" th:fragment="sidebar">
+		<div class="offcanvas-body">
+			<nav class="navbar-dark">
+				<ul class="navbar-nav">
+					<li>
+						<div class="small fw-bold text-uppercase px-3 mt-3">Opções</div>
+					</li>
+					<li class="my-2">
+						<hr class="dropdown-toggle-split" />
+					</li>
+
+					<!-- 1o elemento -->
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#consumos">
+							<span class="me-2">
+								<i class="bi bi-cart"></i>
+							</span>
+							<span>Consumos</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>
+						<div class="collapse" id="consumos" th:classappend=" ${#strings.startsWith(#request.requestURI, '/consumos')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/consumos/cadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/consumos/abrirpesquisar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-search text-white"></i>
+										</span>
+										<span class="text-white">Pesquisar</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					
+					<!-- 2o elemento -->
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#quartos">
+							<span class="me-2">
+								<i class="bi bi-moon-stars"></i>
+
+							</span>
+							<span>Quartos</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>   
+						
+						<div class="collapse" id="quartos" th:classappend=" ${#strings.startsWith(#request.requestURI, '/quartos')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/quartos/cadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/quartos/abrirpesquisar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-search text-white"></i>
+										</span>
+										<span class="text-white">Pesquisar</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					
+					<!-- 3o elemento -->
+					
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#hospedes">
+							<span class="me-2">
+
+								<i class="bi bi-file-person"></i>
+
+							</span>
+							<span>Hospedes</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>
+						<div class="collapse" id="hospedes" th:classappend=" ${#strings.startsWith(#request.requestURI, '/hospedes')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/hospedes/cadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/hospedes/abrirpesquisar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-search text-white"></i>
+										</span>
+										<span class="text-white">Pesquisar</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					
+					<!-- 4o elemento -->
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#contas">
+							<span class="me-2">
+								<i class="bi bi-briefcase-fill"></i>
+							</span>
+							<span>Conta</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>
+						<div class="collapse" id="contas" th:classappend=" ${#strings.startsWith(#request.requestURI, '/contas')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/contas/cadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/contas/abrirpesquisar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-search text-white"></i>
+										</span>
+										<span class="text-white">Pesquisar</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<!-- 5o elemento -->
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#checkins">
+							<span class="me-2">
+								<i class="bi bi-briefcase-fill"></i>
+							</span>
+							<span>CheckIn</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>
+						<div class="collapse" id="checkins" th:classappend=" ${#strings.startsWith(#request.requestURI, '/checkins')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/checkins/abrircadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar Hóspede</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/checkins/abrirpesquisar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-search text-white"></i>
+										</span>
+										<span class="text-white">Pesquisar CheckIns</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<!-- 6o elemento -->
+					<li>
+						<a class="nav-link px-3 sidebar-link text-white" data-bs-toggle="collapse" href="#usuarios">
+							<span class="me-2">
+								<i class="bi bi-person-fill"></i>
+							</span>
+							<span>Usuários</span>
+							<span class="ms-auto">
+								<span class="right-icon">
+									<i class="bi bi-chevron-down"></i>
+								</span>
+							</span>
+						</a>   
+						
+						<div class="collapse" id="usuarios" th:classappend=" ${#strings.startsWith(#request.requestURI, '/usuarios')} ? show">
+							<ul class="navbar-nav ps-3">
+								<li>
+									<a th:href="@{/usuarios/cadastrar}" class="nav-link px-3">
+										<span class="me-2">
+											<i class="bi bi-plus-square text-white"></i>
+										</span>
+										<span class="text-white">Cadastrar</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- !offcanvas sidebar -->
+</body>
+</html>

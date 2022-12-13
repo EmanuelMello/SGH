@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Pesquisar Lotes</title>
+</head>
+<body>
+	<div layout:fragment="conteudo">
+
+		<div th:replace="~{layout/fragments/sidebar :: sidebar}"></div>
+
+		<!-- conteudo principal -->
+		<main class="mt-5 p-4 pt-5">
+			<div class="container-fluid">
+
+				<form th:action="@{/lotes/pesquisar}" method="get">
+					<label for="codigo" class="form-label">Código</label>
+					<input type="number" id="codigo" name="codigo" class="form-control mb-3">
+
+					<label for="validadeInicial" class="form-label">Validade Inicial</label>
+					<input type="text" name="validadeInicial" id="validadeInicial" class="form-control mb-3">
+
+					<label for="validadeFinal" class="form-label">Validade Final</label>
+					<input type="text" name="validadeFinal" id="validadeFinal" class="form-control mb-3">
+
+					<label for="nroDosesDoLoteInicial" class="form-label">Número Doses Lote Inicial</label>
+					<input type="number" name="nroDosesDoLoteInicial" id="nroDosesDoLoteInicial" class="form-control mb-3">
+
+					<label for="nroDosesDoLoteFinal" class="form-label">Número Doses Lote Final</label>
+					<input type="number" name="nroDosesDoLoteFinal" id="nroDosesDoLoteFinal" class="form-control mb-3">
+
+					<label for="nroDosesAtualInicial" class="form-label">Número Doses Atual Inicial</label>
+					<input type="number" name="nroDosesAtualInicial" id="nroDosesAtualInicial" class="form-control mb-3">
+
+					<label for="nroDosesAtualFinal" class="form-label">Número Doses Atual Final</label>
+					<input type="number" name="nroDosesAtualFinal" id="nroDosesAtualFinal" class="form-control mb-3">
+
+					<label for="codigoVacina" class="form-label">Vacina</label>
+					<select name="codigoVacina" id="codigoVacina" class="form-select mb-3">
+						<option value="" selected="selected">Não Selecionada</option>
+						<option th:each="v : ${vacinas}" th:value="${v.codigo}" th:text="${v.nome}"></option>
+					</select>
+
+					<input type="submit" value="Pesquisar" class="btn btn-primary">
+				</form>
+
+			</div>
+
+		</main>
+	</div>
+
+</body>
+</html>
