@@ -70,7 +70,7 @@ public class CheckInController {
 			checkin = new CheckIn();
 		}
 		
-		checkin.setCheckOut(dataCheckOut);
+		checkin.setDataCheckOut(dataCheckOut);
 		
 		sessao.setAttribute("checkin", checkin);
 
@@ -185,7 +185,7 @@ public class CheckInController {
 			checkin = new CheckIn();
 		}
 		
-		checkin.setCheckIn(LocalDate.now());
+		checkin.setDataCheckIn(LocalDate.now());
 		
 		checkinService.salvar(checkin);
 		checkin.getQuarto().setStatusQuarto(StatusQuarto.OCUPADO);
