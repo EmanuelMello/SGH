@@ -3,6 +3,7 @@ CREATE TABLE public.checkout
     codigo serial NOT NULL,
     valortotal real,
     codigo_checkin integer,
+    status text DEFAULT 'ATIVO',
     PRIMARY KEY (codigo)
 );
 

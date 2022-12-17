@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,8 @@ public class CheckIn implements Serializable {
 	@SequenceGenerator(name="gerador5", sequenceName="checkIn_codigo_seq", allocationSize=1)
 	@GeneratedValue(generator="gerador5", strategy=GenerationType.SEQUENCE)
 	private Long codigo;
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.ATIVO;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
 	@ManyToOne(fetch = FetchType.LAZY)
