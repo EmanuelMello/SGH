@@ -1,0 +1,17 @@
+INSERT INTO quarto (numero, descricao,valor) VALUES
+('101','Quarto Solteiro',100.00),
+('102', 'Quarto Solteiro',100.00),
+('103', 'Quarto Solteiro',100.00),
+('104', 'Quarto Solteiro',100.00),
+('201', 'Quarto Casal',200.00),
+('202', 'Quarto Casal',200.00),
+('203', 'Quarto Casal',200.00),
+('204', 'Quarto Casal',200.00),
+('1011','Quarto Solteiro c/ Banheira',200.00),
+('1012','Quarto Solteiro c/ Banheira',200.00),
+('1013','Quarto Solteiro c/ Banheira',200.00),
+('1014','Quarto Solteiro c/ Banheira',200.00),
+('2011','Quarto Casal c/ Banheira',300.00),
+('2012','Quarto Casal c/ Banheira',300),
+('2013','Quarto Casal c/ Banheira',300),
+('2014','Quarto Casal c/ Banheira',300);
