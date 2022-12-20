@@ -18,13 +18,13 @@ public class CheckInService {
 		checkInRepository.save(checkIn);
 	}
 	
-//	@Transactional
-//	public void alterar(Hospedagem hospedagem) {
-//		hospedagemRepository.save(hospedagem);
-//	}
-//	
-//	@Transactional
-//	public void remover(Long codigo) {
-//		hospedagemRepository.deleteById(codigo);
-//	}
+	@Transactional
+	public void alterar(CheckIn checkIn) {
+		checkInRepository.save(checkIn);
+	}
+	
+	@Transactional
+	public void remover(Long codigo) {
+		checkInRepository.deleteById(codigo);
+	}
 }

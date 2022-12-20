@@ -1,10 +1,12 @@
 CREATE TABLE public.checkin
 (
     codigo serial NOT NULL,
-    checkIN date,
-    checkOut date,
+    dataCheckIn date,
+    dataCheckOut date,
     codigo_hospede integer,
     codigo_quarto integer,
+    status text DEFAULT 'ATIVO',
+    statusPago text DEFAULT 'NAO_PAGO',
     PRIMARY KEY (codigo)
 );
 

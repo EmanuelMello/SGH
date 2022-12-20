@@ -25,19 +25,15 @@
 								<span>Hóspedes</span>
 							</div>
 							<div class="card-body">
-								<table class="table table-striped table-hover table-responsive w-100">
+								<table class="table table-striped table-dark table-responsive">
 									<thead>
 										<tr>
-											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'codigo', 'Código', 'col-xs-2')}"></div>
-											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'nome', 'Nome', 'col-xs-2')}">
-												<th scope="col" class="col-xs-7">Nome</th>
-											</div>
-											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'cpf', 'CPF', 'col-xs-2')}">
-												<th scope="col" class="col-xs-7">Cpf</th>
-											</div>
+											<th scope="col" class="col-xs-7">Código</th>
+											<th scope="col" class="col-xs-7">Nome</th>
+											<th scope="col" class="col-xs-7">CPF</th>
 											<th scope="col" class="col-xs-7">RG</th>
 											<th scope="col" class="col-xs-7">Telefone</th>
-											<th scope="col">Escolher</th>
+											<th scope="col" class="col-xs-2 text-center">Escolher</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -54,7 +50,7 @@
 													<input type="hidden" name="cpf" th:value="${p.cpf}">
 													<input type="hidden" name="rg" th:value="${p.rg}">
 													<input type="hidden" name="telefone" th:value="${p.telefone}">
-													<button type="submit"  class="btn btn-secondary">Escolher</button>
+													<button type="submit" class="btn btn-secondary">Escolher</button>
 												</form>
 											</td>
 										</tr>

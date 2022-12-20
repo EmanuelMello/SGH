@@ -14,22 +14,24 @@
 		<main class="mt-5 p-4 pt-5">
 			<div class="container-fluid">
 
-				<form th:action="@{/checkouts/cadastrar}" method="post" th:object="${checkOut}">
+				<form th:action="@{/checkouts/cadastroValorTotal}" method="get" th:object="${checkOut}">
 					<label for="valorTotal" class="form-label">Valor Total</label>
-					<input type="text" th:field="*{valorTotal}" class="form-control mt-3">
-					
-					<label for="checkIn" class="form-label">CheckIns</label>
-					<select id="checkin" name="checkin" class="form-select mb-3">
-						<option th:each="c : ${checkins}" th:value="${c.codigo}" th:text="${c.hospede.nome}" th:selected="${c.codigo} == *{checkin?.codigo}"></option>
-					</select>
-					<input type="submit" value="Cadastrar" class="btn btn-primary">
+					<input type="text" name="valorTotal" id="valorTotal" th:value="${{session.checkout.valorTotal}}" class="form-control mt-3">
 				</form>
 
-				<div th:if="${notificacao != null}" th:object="${notificacao}">
-					<input type="hidden" id="mensagem" th:value="*{mensagem}">
-					<input type="hidden" id="tipo" th:value="*{tipo}">
-					<input type="hidden" id="intervalo" th:value="*{intervalo}">
+				<form th:action="@{/checkouts/abrirescolhercheckin}" method="get" class="mt-3">
+					<button type="submit" class="btn btn-primary">Escolher Checkin</button>
+				</form>
+				<div th:if="${session.checkout?.checkIn != null}">
+					<p th:text="'Descrição: ' + ${session.checkout.checkIn.quarto.descricao}" class="mt-3"></p>
+					<p th:text="'Valor Diária: ' + ${session.checkout.checkIn.quarto.valor}" class="mt-3"></p>
+					<p th:text="'Data CheckIn: ' + ${#temporals.format(session.checkout.checkIn.dataCheckIn, 'dd/MM/yyyy')}" class="mt-3"></p>
+					<p th:text="'Data CheckOut: ' + ${#temporals.format(session.checkout.checkIn.dataCheckOut, 'dd/MM/yyyy')}" class="mt-3"></p>
 				</div>
+
+				<form th:action="@{/checkouts/cadastrar}" method="get" class="mt-3">
+					<button th:disabled="${session.checkout?.checkIn == null} or ${session.checkout?.valorTotal == null}" type="submit" class="btn btn-primary">Cadastrar CheckOut</button>
+				</form>
 			</div>
 		</main>
 	</div>

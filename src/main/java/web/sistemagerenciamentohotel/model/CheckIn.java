@@ -29,14 +29,16 @@ public class CheckIn implements Serializable {
 	private Long codigo;
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.ATIVO;
-	private LocalDate checkIn;
-	private LocalDate checkOut;
+	private LocalDate dataCheckIn;
+	private LocalDate dataCheckOut;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo_quarto")
 	private Quarto quarto;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo_hospede")
 	private Hospede hospede;
+	@Enumerated(EnumType.STRING)
+	private StatusPago statusPago = StatusPago.NAO_PAGO;
 
 	public Long getCodigo() {
 		return codigo;
@@ -46,20 +48,40 @@ public class CheckIn implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public LocalDate getCheckIn() {
-		return checkIn;
+	public StatusPago getStatusPago() {
+		return statusPago;
 	}
 
-	public void setCheckIn(LocalDate checkIn) {
-		this.checkIn = checkIn;
+	public void setStatusPago(StatusPago statusPago) {
+		this.statusPago = statusPago;
 	}
 
-	public LocalDate getCheckOut() {
-		return checkOut;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setCheckOut(LocalDate checkOut) {
-		this.checkOut = checkOut;
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public LocalDate getDataCheckIn() {
+		return dataCheckIn;
+	}
+
+	public void setDataCheckIn(LocalDate dataCheckIn) {
+		this.dataCheckIn = dataCheckIn;
+	}
+
+	public LocalDate getDataCheckOut() {
+		return dataCheckOut;
+	}
+
+	public void setDataCheckOut(LocalDate dataCheckOut) {
+		this.dataCheckOut = dataCheckOut;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public Quarto getQuarto() {
@@ -87,14 +109,8 @@ public class CheckIn implements Serializable {
 //	}
 
 	@Override
-	public String toString() {
-		return "CheckIn [codigo=" + codigo + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", quarto=" + quarto
-				+ ", hospede=" + hospede + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		return Objects.hash(codigo);
+		return Objects.hash(codigo, dataCheckIn, dataCheckOut, hospede, quarto, status, statusPago);
 	}
 
 	@Override
@@ -106,6 +122,14 @@ public class CheckIn implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CheckIn other = (CheckIn) obj;
-		return Objects.equals(codigo, other.codigo);
+		return Objects.equals(codigo, other.codigo) && Objects.equals(dataCheckIn, other.dataCheckIn)
+				&& Objects.equals(dataCheckOut, other.dataCheckOut) && Objects.equals(hospede, other.hospede)
+				&& Objects.equals(quarto, other.quarto) && status == other.status && statusPago == other.statusPago;
+	}
+
+	@Override
+	public String toString() {
+		return "CheckIn [codigo=" + codigo + ", status=" + status + ", dataCheckIn=" + dataCheckIn + ", dataCheckOut="
+				+ dataCheckOut + ", quarto=" + quarto + ", hospede=" + hospede + ", statusPago=" + statusPago + "]";
 	}
 }

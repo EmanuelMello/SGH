@@ -11,12 +11,12 @@
 		<ul class="pagination justify-content-center">
 			<li class="page-item" th:classappend="${pagina.primeira} ? disabled">
 				<a class="page-link" href="#" th:attrappend="tabindex=${pagina.primeira} ? -1" th:href="${pagina.urlParaPagina(0)}">
-					<span class="bi bi-skip-backward-fill" aria-hidden="true"></span>
+					<span class="fa fa-angle-double-left" aria-hidden="true"></span>
 				</a>
 			</li>
 			<li class="page-item" th:classappend="${pagina.primeira} ? disabled">
 				<a class="page-link" href="#" th:attrappend="tabindex=${pagina.primeira} ? -1" th:href="${pagina.urlParaPagina(pagina.atual -1)}">
-					<span class="bi bi-caret-left-fill" aria-hidden="true"></span>
+					<span class="fa fa-angle-left" aria-hidden="true"></span>
 				</a>
 			</li>
 			<li class="page-item" th:each="numeroPagina : ${#numbers.sequence(pagina.inicio, pagina.fim)}" th:classappend="${numeroPagina == pagina.atual + 1} ? active">
@@ -24,12 +24,12 @@
 			</li>
 			<li class="page-item" th:classappend="${pagina.ultima} ? disabled">
 				<a class="page-link" href="#" th:attrappend="tabindex=${pagina.ultima} ? -1" th:href="${pagina.urlParaPagina(pagina.atual + 1)}">
-					<span class="bi bi-caret-right-fill" aria-hidden="true"></span>
+					<span class="fa fa-angle-right" aria-hidden="true"></span>
 				</a>
 			</li>
 			<li class="page-item" th:classappend="${pagina.ultima} ? disabled">
 				<a class="page-link" href="#" th:attrappend="tabindex=${pagina.ultima} ? -1" th:href="${pagina.urlParaPagina(pagina.numeroPaginas - 1)}">
-					<span class="bi bi-skip-forward-fill" aria-hidden="true"></span>
+					<span class="fa fa-angle-double-right" aria-hidden="true"></span>
 				</a>
 			</li>
 		</ul>

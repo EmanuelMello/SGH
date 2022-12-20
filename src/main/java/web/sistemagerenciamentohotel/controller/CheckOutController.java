@@ -1,9 +1,10 @@
 package web.sistemagerenciamentohotel.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,23 +16,24 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import web.sistemagerenciamentohotel.ajax.NotificacaoAlertify;
-import web.sistemagerenciamentohotel.ajax.TipoNotificacaoAlertify;
 import web.sistemagerenciamentohotel.model.CheckIn;
 import web.sistemagerenciamentohotel.model.CheckOut;
+import web.sistemagerenciamentohotel.model.Quarto;
 import web.sistemagerenciamentohotel.model.Status;
-import web.sistemagerenciamentohotel.model.filter.CheckOutFilter;
+import web.sistemagerenciamentohotel.model.StatusPago;
+import web.sistemagerenciamentohotel.model.filter.CheckInFilter;
 import web.sistemagerenciamentohotel.pagination.PageWrapper;
 import web.sistemagerenciamentohotel.repository.CheckInRepository;
 import web.sistemagerenciamentohotel.repository.CheckOutRepository;
+import web.sistemagerenciamentohotel.repository.QuartoRepository;
+import web.sistemagerenciamentohotel.service.CheckInService;
 import web.sistemagerenciamentohotel.service.CheckOutService;
+import web.sistemagerenciamentohotel.service.QuartoService;
+import web.sistemagerenciamentohotel.model.StatusQuarto;
 
 @Controller
 @RequestMapping("/checkouts")
@@ -41,107 +43,100 @@ public class CheckOutController {
 	private CheckOutRepository checkOutRepository;
 	
 	@Autowired
+	private QuartoRepository quartoRepository;
+	
+	@Autowired
 	private CheckOutService checkOutService;
 	
 	@Autowired
 	private CheckInRepository checkInRepository;
+	
+	@Autowired
+	private QuartoService quartoService;
+	
+	@Autowired
+	private CheckInService checkinService;
 
 	
-	@GetMapping("/abrirpesquisar")
-	public String abrirPesquisar(Model model) {
-		List<CheckIn> checkins= checkInRepository.findAll();
-		model.addAttribute("checkins", checkins);
-		return "checkOut/pesquisar";
+	@GetMapping("/abrircadastrar")
+	public String abrirCadastrar(CheckOut checkout, HttpSession sessao) {
+		sessao.setAttribute("checkout", checkout);
+		return "checkout/cadastrar";
 	}
 	
-	@GetMapping("/pesquisar")
-	public String pesquisar(CheckOutFilter filtro, Model model,
-			          @PageableDefault(size = 5) 
+	@GetMapping("/cadastroValorTotal")
+	public String dataCheckOut(BigDecimal valorTotal,HttpSession sessao) {
+		CheckOut checkout = (CheckOut) sessao.getAttribute("checkout");
+		if (checkout == null) {
+			checkout = new CheckOut();
+		}
+		
+		checkout.setValorTotal(valorTotal);
+		
+		sessao.setAttribute("checkout", checkout);
+
+		return "checkout/cadastrar";
+	}
+
+	@GetMapping("/abrirescolhercheckin")
+	public String abrirEscolherCheckIn(Model model) {
+		List<CheckIn> checkins = checkInRepository.findByStatus(Status.ATIVO);
+		model.addAttribute("checkins",checkins);
+		
+		List<Quarto> quartos = quartoRepository.findAll();
+		model.addAttribute("quartos", quartos);
+		
+		return "checkout/pesquisarcheckin";
+	}
+
+	@GetMapping("/pesquisarcheckin")
+	public String pesquisar(CheckInFilter filtro, Model model,
+			          @PageableDefault(size = 8) 
                       @SortDefault(sort = "codigo", direction = Sort.Direction.ASC)
                       Pageable pageable, HttpServletRequest request) {
-		Page<CheckOut> pagina = checkOutRepository.pesquisar(filtro, pageable);
-		PageWrapper<CheckOut> paginaWrapper = new PageWrapper<>(pagina, request);
+		Page<CheckIn> pagina = checkInRepository.pesquisar(filtro, pageable);
+		PageWrapper<CheckIn> paginaWrapper = new PageWrapper<>(pagina, request);
 		model.addAttribute("pagina", paginaWrapper);
-		return "checkOut/mostrarcheckOuts";
+		return "checkout/mostrarcheckins";
 	}
 	
-	@GetMapping("/abrircadastrar")
-	public String abrirCadastrar(Model model, CheckOut checkOut) {
-		List<CheckIn> checkins= checkInRepository.findAll();
-		model.addAttribute("checkins", checkins);
+	@PostMapping("/escolhercheckin")
+	public String escolherCheckIn(CheckIn checkin, HttpSession sessao) {
+		CheckOut checkout = (CheckOut) sessao.getAttribute("checkout");
+		if (checkout == null) {
+			checkout = new CheckOut();
+		}
+
+		checkout.setCheckIn(checkin);
+		checkout.getCheckIn().setHospede(checkin.getHospede());
+		checkout.getCheckIn().setQuarto(checkin.getQuarto());
+		sessao.setAttribute("checkout", checkout);
+
+		return "checkout/cadastrar";
+	}
+
+	@GetMapping("/cadastrar")
+	public String cadastrarCheckOut(HttpSession sessao) {
+		CheckOut checkout = (CheckOut) sessao.getAttribute("checkout");
+		if (checkout == null) {
+			checkout = new CheckOut();
+		}
+		checkout.getCheckIn().setStatus(Status.INATIVO);
+		checkout.getCheckIn().setStatusPago(StatusPago.PAGO);
+		checkinService.alterar(checkout.getCheckIn());
+		checkout.getCheckIn().getQuarto().setStatusQuarto(StatusQuarto.DISPONIVEL);
+		quartoService.alterar(checkout.getCheckIn().getQuarto());
+		checkOutService.salvar(checkout);
+		checkout.setValorTotal(null);
+		checkout.setCheckIn(null);
+		sessao.setAttribute("checkout", null);
 		
-		return "checkOut/cadastrar";
+		return "redirect:/checkouts/cadastrosucesso";
 	}
-	
-	@PostMapping("/cadastrar")
-	public String cadastrar(@Valid CheckOut checkOut, BindingResult resultado) {
-		if(resultado.hasErrors()) {
-			logger.info("O CheckOut recebido para cadastrar não é válido.");
-			logger.info("Erros encontrados:");
-			for (FieldError erro : resultado.getFieldErrors()) {
-				logger.info("{}", erro);
-			}
-			return "checkOut/cadastrar";
-		}else {
-			checkOutService.salvar(checkOut);
-			return "redirect:/checkOuts/cadastrosucesso";
-		}
-	}
-	
+
 	@GetMapping("/cadastrosucesso")
-	public String mostrarCadastroSucesso(CheckOut checkOut,  Model model) {
-		NotificacaoAlertify notificao = new NotificacaoAlertify("Cadastro de checkOut efetuado com sucesso.",TipoNotificacaoAlertify.SUCESSO);
-		model.addAttribute("notificacao",notificao);
-		return "checkOut/cadastrar";
-	}
-	
-	@PostMapping("/abriralterar")
-	public String abrirAlterar(CheckOut checkOut,String queryString, Model model) {
-		model.addAttribute("queryString",queryString);
-		return "checkOut/alterar";
-	}
-	
-	@PostMapping("/alterar")
-	public String alterar(@Valid CheckOut checkOut, BindingResult resultado,String queryString, Model model,
-			RedirectAttributes atributos) {
-		if(resultado.hasErrors()) {
-			logger.info("O CheckOut recebido para alterar não é válido.");
-			logger.info("Erros encontrados:");
-			for (FieldError erro : resultado.getFieldErrors()) {
-				logger.info("{}", erro);
-			}
-			model.addAttribute("queryString",queryString);
-			return "checkOut/cadastrar";
-		}else {
-			checkOutService.alterar(checkOut);
-			atributos.addFlashAttribute("queryString",queryString);
-			return "redirect:/checkOuts/alterarsucesso";
-		}
-	}
-	
-	@GetMapping("/alterarsucesso")
-	public String mostrarAlterarSucesso(Model model) {
-		NotificacaoAlertify notificao = new NotificacaoAlertify("Alteração de checkOut efetuado com sucesso.",TipoNotificacaoAlertify.SUCESSO);
-		model.addAttribute("notificacao",notificao);
-		return "forward:/checkOuts/pesquisar?"+ model.getAttribute("queryString");
-	}
-	
-	@PostMapping("/confirmarremocao")
-	public String confirmarRemocao(CheckOut checkOut) {
-		return "checkOut/confirmarremocao";
-	}
-	
-	@PostMapping("/remover")
-	public String remover(CheckOut checkOut) {
-		checkOut.setStatus(Status.INATIVO);
-		checkOutService.alterar(checkOut);
-		return "redirect:/checkOuts/remocaosucesso";
-	}
-	
-	@GetMapping("/remocaosucesso")
-	public String mostrarRemocaoSucesso(Model model) {
-		NotificacaoAlertify notificao = new NotificacaoAlertify("Remoção de hóspede efetuado com sucesso.",TipoNotificacaoAlertify.SUCESSO);
-		model.addAttribute("notificacao",notificao);
-		return "checkOut/pesquisar";
+	public String mostrarCadastroSucesso(Model model) {
+		model.addAttribute("mensagem", "Cadastro de checkout efetuado com sucesso.");
+		return "mostrarmensagem";
 	}
 }

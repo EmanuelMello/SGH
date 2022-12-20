@@ -39,6 +39,7 @@ button {
 
   footer {
     margin-left: var(--sidebar-width);
+    background:#D3D3D3 ;
   }
 
   /* this is to remove the backdrop */

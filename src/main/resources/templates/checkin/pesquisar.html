@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Pesquisar CheckIns</title>
+</head>
+<body>
+	<div layout:fragment="conteudo">
+
+		<div th:replace="~{layout/fragments/sidebar :: sidebar}"></div>
+
+		<!-- conteudo principal -->
+		<main class="mt-5 p-4 pt-5">
+			<div class="checkIniner-fluid">
+
+				<form th:action="@{/checkins/pesquisar}" method="get">
+					<div th:fragment="campospesquisacheckin">
+					
+						<label for="codigoQuarto" class="form-label">Número do Quarto</label>
+						<select name="codigoQuarto" id="codigoQuarto" class="form-select mb-3">
+							<option value="" selected="selected">Não Selecionada</option>
+							<option th:each="q : ${quartos}" th:value="${q.codigo}" th:text="${q.numero}"></option>
+						</select>
+						
+						<input type="submit" value="Pesquisar" class="btn btn-primary">
+					</div>
+				</form>
+			</div>
+
+		</main>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Mostrar CheckIns</title>
+</head>
+<body>
+	<div layout:fragment="conteudo">
+
+		<div th:replace="~{layout/fragments/sidebar :: sidebar}"></div>
+
+		<!-- conteudo principal -->
+		<main class="mt-5 p-4 pt-5">
+			<div class="checkIniner-fluid">
+
+				<!-- area Grande -->
+				<div class="row">
+					<div class="col-md-12 mb-3">
+						<div class="card">
+							<div class="card-header">
+								<span>
+									<i class="bi bi-table me-2"></i>
+								</span>
+								<span>Mostrar CheckIns</span>
+							</div>
+							<div class="card-body">
+								<table class="table table-striped table-dark table-responsive w-100">
+									<thead>
+										<tr>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'codigo', 'Código', 'col-xs-2')}"></div>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'codigoQuarto', 'Código Quarto', 'col-xs-2')}"></div>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'codigoHospede', 'Código Hospede', 'col-xs-2')}"></div>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'dataCheckIn', 'Data Check Out', 'col-xs-2')}"></div>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'dataCheckOut', 'Data Check In', 'col-xs-2')}"></div>
+											<div th:replace="~{layout/fragments/paginacao :: coluna(${pagina}, 'statusPago', 'Status Pago', 'col-xs-2')}"></div>
+											<th scope="col" colspan="2" class="col-xs-2 text-center">Operações</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="c : ${pagina.conteudo}">
+											<td th:text="${c.codigo}"></td>
+											<td th:text="${c.quarto.codigo}"></td>
+											<td th:text="${c.hospede.codigo}"></td>
+											<td th:text="${#temporals.format(c.dataCheckIn, 'dd/MM/yyyy')}"></td>
+											<td th:text="${#temporals.format(c.dataCheckOut, 'dd/MM/yyyy')}"></td>
+											<td th:text="${c.statusPago}"></td>
+											<td class="text-center">
+												<form th:action="@{/checkins/abriralterar}" method="post">
+													<input type="hidden" name="codigo" th:value="${c.codigo}">
+													<input type="hidden" name="quarto" th:value="${c.quarto.codigo}">
+													<input type="hidden" name="hospede" th:value="${c.hospede.codigo}">
+													<input type="hidden" name="dataCheckIn" th:value="${#temporals.format(c.dataCheckIn, 'dd/MM/yyyy')}">
+													<input type="hidden" name="dataCheckOut" th:value="${#temporals.format(c.dataCheckOut, 'dd/MM/yyyy')}">
+													<input type="hidden" name="statusPago" th:value="${c.statusPago}">
+													<button type="submit" title="Editar" class="btn btn-secondary">
+														<i class="bi bi-pencil-fill"></i>
+													</button>
+												</form>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div th:replace="~{layout/fragments/paginacao :: paginacao(${pagina})}"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- area grande -->
+			</div>
+		</main>
+	</div>
+</body>
+</html>
